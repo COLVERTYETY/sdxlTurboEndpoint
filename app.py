@@ -39,10 +39,18 @@ async def text2image(prompt:str, seed: int =-1):
     return Response(content=image_as_png, media_type="image/png")
 
 @app.post("/image2image")
-async def image2image(prompt: str, file: UploadFile = File(...), strength: float = 0.93, num_inference_steps: int = 2, seed: int =-1):
+async def image2image(prompt: str, file: UploadFile = File(...), strength: float = 0.93, num_inference_steps: int = 2, seed: int =-1, noise:float =0.0, k:int = 0):
     content = await file.read()
     nparr = np.fromstring(content, np.uint8)
     init_image = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
+    init_image += np.random.normal(0, 1, init_image.shape)* noise
+    init_image = init_image.clip(0, 255).astype(np.uint8)
+    if k > 0:
+        coords = np.linspace(0, 255, k)
+        init_image = np.digitize(init_image, coords, right=True)
+        init_image = coords[init_image]
+        init_image = init_image.astype(np.uint8)
+
     image = Image.fromarray(cv2.cvtColor(init_image, cv2.COLOR_BGR2RGB))
     print("prompt is: ", prompt)
     print("image is: ", image)
