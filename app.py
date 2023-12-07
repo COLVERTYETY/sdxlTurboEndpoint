@@ -43,23 +43,30 @@ async def image2image(prompt: str, file: UploadFile = File(...), strength: float
     content = await file.read()
     nparr = np.fromstring(content, np.uint8)
     init_image = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
-    init_image += np.random.normal(0, 1, init_image.shape)* noise
-    init_image = init_image.clip(0, 255).astype(np.uint8)
-    if k > 0:
-        coords = np.linspace(0, 255, k)
-        init_image = np.digitize(init_image, coords, right=True)
-        init_image = coords[init_image]
+    if k > 1:
+        if k == 2:
+            # For k=2, map pixel values to either 0 or 255 based on a threshold of 127
+            init_image = np.where(init_image <= 127, 0, 255)
+        else:
+            # For k>2, use the original method
+            coords = np.linspace(0, 255, k)
+            init_image = np.digitize(init_image, coords, right=True)
+            init_image = coords[init_image]
         init_image = init_image.astype(np.uint8)
 
+    init_image = (init_image +np.random.normal(0, 1, init_image.shape)* noise).clip(0, 255).astype(np.uint8)
     image = Image.fromarray(cv2.cvtColor(init_image, cv2.COLOR_BGR2RGB))
     print("prompt is: ", prompt)
     print("image is: ", image)
     if seed != -1:
         torch.manual_seed(seed)
+        np.random.seed(seed)
     print("strength is: ", strength)
     print("num_inference_steps is: ", num_inference_steps)
     # print("init_image is: ", init_image)
     init_image = image.resize((512, 512))
+    # save a copy of the image
+    init_image.save(f"init_image_n{noise:3f}_k{k}.png")
     start = time.time()
     image = pipeline(prompt, image=init_image, strength=strength, guidance_scale=0.0, num_inference_steps=num_inference_steps).images[0]
     print("time: ", time.time() - start)
