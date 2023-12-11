@@ -13,6 +13,9 @@ COPY . /usr/src/app
 # Install any needed packages specified in requirements.txt
 RUN pip3 install -r requirements.txt
 
+# Install the model
+RUN python3 /usr/src/download.py
+
 # Make port 8080 available to the world outside this container
 EXPOSE 8080
 

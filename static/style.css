@@ -1,0 +1,118 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden;
+    background-color: black; /* Set background color to black */
+    color: white; /* Set text color to white */
+}
+
+.inputs-section {
+    height: 20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.canvas-section {
+    height: 80%;
+    display: flex;
+}
+
+.canvas-container {
+    width: 50%;
+    display: flex;
+    flex-direction: column; /* Stack elements vertically */
+    height: 100%; /* Take full height of the parent */
+    justify-content: center;
+    align-items: center;
+}
+
+canvas {
+    border: 2px solid black;
+
+}
+
+#whiteCanvas {
+    background-color: white;
+}
+
+#grayCanvas {
+    background-color: gray;
+}
+#whiteCanvas, #grayCanvas {
+    height: 80%;
+    width: 80%; /* Adjust width to be the same as height */
+}
+
+.menu {
+    position: absolute;
+    top: 0;
+    right: 0;
+    align-items: center;
+}
+
+.menu-content {
+    display: none;
+    position: absolute;
+    right: 0;
+    background-color: white;
+    border: 1px solid black;
+}
+
+.inputs-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    width: 100%;
+}
+
+.inputs-section .input-group {
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.inputs-section .input-group label {
+    margin-right: 10px;
+}
+
+.inputs-section .long-input {
+    width: 600px; /* Adjust the width as needed */
+}
+
+.inputs-section .small-inputs input {
+    width: 60px; /* Adjust the width for smaller inputs */
+    margin-right: 10px;
+}
+
+.small-inputs {
+    width: auto;
+}
+
+#overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.explanation {
+    position: absolute;
+    top: 20px;
+    right: 0;
+    align-items: center;
+}
+.explanation-content {
+    display: none;
+    position: absolute;
+    top:20px;
+    right: 0;
+    background-color: black;
+    border: 1px solid white;
+    color: white;
+    padding: 10px;
+    width: 300px;
+}

@@ -1,0 +1,9 @@
+version: '3'
+services:
+    sd:
+        privileged: true
+        image: colvertyety/sdxl_endpoint
+        volumes: 
+            - /home/nstas/.cache/huggingface:/root/.cache/huggingface
+        ports:
+            - 2773:8080
