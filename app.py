@@ -21,8 +21,6 @@ pipeline_text2image = AutoPipelineForText2Image.from_pretrained("stabilityai/sdx
 pipeline_text2image = pipeline_text2image.to(device)
 pipeline = AutoPipelineForImage2Image.from_pipe(pipeline_text2image).to(device)
 # pipeline.unet = torch.compile(pipeline.unet, mode="reduce-overhead", fullgraph=True)
-# pipeline.unet = torch.compile(pipeline.unet, mode="reduce-overhead", fullgraph=True)
-# pipeline.vae = torch.compile(pipeline.vae, mode="reduce-overhead", fullgraph=True)
 # pipeline.upcast_vae()
 
 app = FastAPI()
@@ -141,4 +139,4 @@ async def websocket_image2image(websocket: WebSocket):
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8080)
+    uvicorn.run(app, host="localhost", port=8080)

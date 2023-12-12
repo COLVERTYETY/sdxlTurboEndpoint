@@ -1,5 +1,8 @@
 # sdxl Turbo FastApi Endpoint
 
+
+![demo](demo.gif)
+
 ## Overview
 
 This is a FastApi endpoint for the sdxl Turbo model.
